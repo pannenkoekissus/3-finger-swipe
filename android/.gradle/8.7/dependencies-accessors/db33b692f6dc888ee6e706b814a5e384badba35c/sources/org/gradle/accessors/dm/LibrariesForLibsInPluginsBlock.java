@@ -389,7 +389,7 @@ public class LibrariesForLibsInPluginsBlock extends AbstractExternalDependencyFa
         public Provider<String> getCoreKtx() { return getVersion("coreKtx"); }
 
         /**
-         * Version alias <b>kotlin</b> with value <b>1.9.24</b>
+         * Version alias <b>kotlin</b> with value <b>1.9.22</b>
          * <p>
          * If the version is a rich version and cannot be represented as a
          * single version string, an empty string is returned.

@@ -10,158 +10,158 @@
 10
 11    <!-- Permissions required for system-wide 3-finger swipe screenshot capture -->
 12    <uses-permission android:name="android.permission.VIBRATE" />
-12-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:5:5-66
-12-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:5:22-63
+12-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:5:5-66
+12-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:5:22-63
 13    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-13-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:6:5-77
-13-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:6:22-74
+13-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:6:5-77
+13-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:6:22-74
 14    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-14-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:7:5-95
-14-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:7:22-92
+14-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:7:5-95
+14-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:7:22-92
 15    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-15-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:8:5-77
-15-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:8:22-74
+15-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:8:5-77
+15-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:8:22-74
 16
 17    <permission
-17-->[androidx.core:core:1.13.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\eefc18fafbc1d924b9dbc2ad2b7cd26f\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+17-->[androidx.core:core:1.13.1] /root/.gradle/caches/transforms-4/eefc18fafbc1d924b9dbc2ad2b7cd26f/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
 18        android:name="com.galaxy.threefingerswipe.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-18-->[androidx.core:core:1.13.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\eefc18fafbc1d924b9dbc2ad2b7cd26f\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+18-->[androidx.core:core:1.13.1] /root/.gradle/caches/transforms-4/eefc18fafbc1d924b9dbc2ad2b7cd26f/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
 19        android:protectionLevel="signature" />
-19-->[androidx.core:core:1.13.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\eefc18fafbc1d924b9dbc2ad2b7cd26f\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+19-->[androidx.core:core:1.13.1] /root/.gradle/caches/transforms-4/eefc18fafbc1d924b9dbc2ad2b7cd26f/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
 20
 21    <uses-permission android:name="com.galaxy.threefingerswipe.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-21-->[androidx.core:core:1.13.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\eefc18fafbc1d924b9dbc2ad2b7cd26f\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
-21-->[androidx.core:core:1.13.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\eefc18fafbc1d924b9dbc2ad2b7cd26f\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+21-->[androidx.core:core:1.13.1] /root/.gradle/caches/transforms-4/eefc18fafbc1d924b9dbc2ad2b7cd26f/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.13.1] /root/.gradle/caches/transforms-4/eefc18fafbc1d924b9dbc2ad2b7cd26f/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
 22
 23    <application
-23-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:10:5-43:19
+23-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:10:5-43:19
 24        android:allowBackup="true"
-24-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:11:9-35
+24-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:11:9-35
 25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-25-->[androidx.core:core:1.13.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\eefc18fafbc1d924b9dbc2ad2b7cd26f\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+25-->[androidx.core:core:1.13.1] /root/.gradle/caches/transforms-4/eefc18fafbc1d924b9dbc2ad2b7cd26f/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
 26        android:debuggable="true"
 27        android:extractNativeLibs="false"
 28        android:icon="@drawable/ic_launcher"
-28-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:12:9-45
+28-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:12:9-45
 29        android:label="@string/app_name"
-29-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:13:9-41
+29-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:13:9-41
 30        android:supportsRtl="true"
-30-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:14:9-35
+30-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:14:9-35
 31        android:theme="@style/Theme.ThreeFingerSwipe" >
-31-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:15:9-54
+31-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:15:9-54
 32
 33        <!-- Main Settings & Dashboard UI -->
 34        <activity
-34-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:18:9-27:20
+34-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:18:9-27:20
 35            android:name="com.galaxy.threefingerswipe.MainActivity"
-35-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:19:13-41
+35-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:19:13-41
 36            android:exported="true"
-36-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:20:13-36
+36-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:20:13-36
 37            android:label="@string/app_name"
-37-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:21:13-45
+37-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:21:13-45
 38            android:theme="@style/Theme.ThreeFingerSwipe" >
-38-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:22:13-58
+38-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:22:13-58
 39            <intent-filter>
-39-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:23:13-26:29
+39-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:23:13-26:29
 40                <action android:name="android.intent.action.MAIN" />
-40-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:24:17-69
-40-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:24:25-66
+40-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:24:17-69
+40-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:24:25-66
 41
 42                <category android:name="android.intent.category.LAUNCHER" />
-42-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:25:17-77
-42-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:25:27-74
+42-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:25:17-77
+42-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:25:27-74
 43            </intent-filter>
 44        </activity>
 45
 46        <!-- System Accessibility Service for Gesture Detection -->
 47        <service
-47-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:30:9-41:19
+47-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:30:9-41:19
 48            android:name="com.galaxy.threefingerswipe.ThreeFingerSwipeAccessibilityService"
-48-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:31:13-65
+48-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:31:13-65
 49            android:exported="true"
-49-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:33:13-36
+49-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:33:13-36
 50            android:label="@string/accessibility_service_label"
-50-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:34:13-64
+50-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:34:13-64
 51            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
-51-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:32:13-79
+51-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:32:13-79
 52            <intent-filter>
-52-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:35:13-37:29
+52-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:35:13-37:29
 53                <action android:name="android.accessibilityservice.AccessibilityService" />
-53-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:36:17-92
-53-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:36:25-89
+53-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:36:17-92
+53-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:36:25-89
 54            </intent-filter>
 55
 56            <meta-data
-56-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:38:13-40:72
+56-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:38:13-40:72
 57                android:name="android.accessibilityservice"
-57-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:39:17-60
+57-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:39:17-60
 58                android:resource="@xml/accessibility_service_config" />
-58-->C:\Users\Gebruiker\3-finger-swipe\android\app\src\main\AndroidManifest.xml:40:17-69
+58-->/root/projects/3-finger-swipe/android/app/src/main/AndroidManifest.xml:40:17-69
 59        </service>
 60
 61        <provider
-61-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+61-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
 62            android:name="androidx.startup.InitializationProvider"
-62-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+62-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
 63            android:authorities="com.galaxy.threefingerswipe.androidx-startup"
-63-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+63-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
 64            android:exported="false" >
-64-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+64-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
 65            <meta-data
-65-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+65-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
 66                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-66-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+66-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
 67                android:value="androidx.startup" />
-67-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Gebruiker\.gradle\caches\transforms-4\cc8b7258c8b188113f3df55df8e0362f\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+67-->[androidx.emoji2:emoji2:1.3.0] /root/.gradle/caches/transforms-4/cc8b7258c8b188113f3df55df8e0362f/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
 68            <meta-data
-68-->[androidx.lifecycle:lifecycle-process:2.8.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\c31b1cf10209a2d0daf7f807cfbc7161\transformed\lifecycle-process-2.8.1\AndroidManifest.xml:29:13-31:52
+68-->[androidx.lifecycle:lifecycle-process:2.8.1] /root/.gradle/caches/transforms-4/c31b1cf10209a2d0daf7f807cfbc7161/transformed/lifecycle-process-2.8.1/AndroidManifest.xml:29:13-31:52
 69                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-69-->[androidx.lifecycle:lifecycle-process:2.8.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\c31b1cf10209a2d0daf7f807cfbc7161\transformed\lifecycle-process-2.8.1\AndroidManifest.xml:30:17-78
+69-->[androidx.lifecycle:lifecycle-process:2.8.1] /root/.gradle/caches/transforms-4/c31b1cf10209a2d0daf7f807cfbc7161/transformed/lifecycle-process-2.8.1/AndroidManifest.xml:30:17-78
 70                android:value="androidx.startup" />
-70-->[androidx.lifecycle:lifecycle-process:2.8.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\c31b1cf10209a2d0daf7f807cfbc7161\transformed\lifecycle-process-2.8.1\AndroidManifest.xml:31:17-49
+70-->[androidx.lifecycle:lifecycle-process:2.8.1] /root/.gradle/caches/transforms-4/c31b1cf10209a2d0daf7f807cfbc7161/transformed/lifecycle-process-2.8.1/AndroidManifest.xml:31:17-49
 71            <meta-data
-71-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+71-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
 72                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-72-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+72-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
 73                android:value="androidx.startup" />
-73-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+73-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
 74        </provider>
 75
 76        <receiver
-76-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+76-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
 77            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-77-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+77-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
 78            android:directBootAware="false"
-78-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+78-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
 79            android:enabled="true"
-79-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+79-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
 80            android:exported="true"
-80-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+80-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
 81            android:permission="android.permission.DUMP" >
-81-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+81-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
 82            <intent-filter>
-82-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+82-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
 83                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-83-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-83-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+83-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+83-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
 84            </intent-filter>
 85            <intent-filter>
-85-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+85-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
 86                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-86-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-86-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+86-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+86-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
 87            </intent-filter>
 88            <intent-filter>
-88-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+88-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
 89                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-89-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-89-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+89-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+89-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
 90            </intent-filter>
 91            <intent-filter>
-91-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+91-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
 92                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Gebruiker\.gradle\caches\transforms-4\b3a219767bc4f942c16be93a2e31d00c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+92-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+92-->[androidx.profileinstaller:profileinstaller:1.3.1] /root/.gradle/caches/transforms-4/b3a219767bc4f942c16be93a2e31d00c/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
 93            </intent-filter>
 94        </receiver>
 95    </application>
