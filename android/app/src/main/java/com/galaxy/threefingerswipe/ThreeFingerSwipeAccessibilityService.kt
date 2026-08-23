@@ -124,8 +124,14 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 cancelPendingDelegate()
+                val wasIntercepting = isIntercepting
                 isIntercepting = false
                 gestureDetector.processMotionEvent(event)
+                if (event.actionMasked == MotionEvent.ACTION_UP &&
+                    !wasIntercepting && !isDelegating
+                ) {
+                    delegateToApps()
+                }
                 return
             }
         }
@@ -245,7 +251,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val TAG = "3FingerSwipeService"
-        private const val DELEGATE_DELAY_MS = 350L
+        private const val DELEGATE_DELAY_MS = 300L
         private const val FALLBACK_SLOP_PX = 32f
     }
 }
