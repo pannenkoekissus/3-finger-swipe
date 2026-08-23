@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.galaxy.threefingerswipe.app-debug-40:/drawable_ic_launcher.xml.flat",
+        "source": "com.galaxy.threefingerswipe.app-main-42:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.galaxy.threefingerswipe.app-debug-40:/xml_accessibility_service_config.xml.flat",
+        "source": "com.galaxy.threefingerswipe.app-main-42:/xml/accessibility_service_config.xml"
+    }
+]

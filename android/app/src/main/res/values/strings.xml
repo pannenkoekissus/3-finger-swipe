@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">3-Finger Swipe Screenshot</string>
+    <string name="accessibility_service_label">3-Finger Swipe Screenshot Service</string>
+    <string name="accessibility_service_description">Detects 3-finger swipe gestures on your screen to trigger system screenshots automatically across all apps on Samsung Galaxy devices.</string>
+</resources>

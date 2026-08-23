@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-Finger Swipe Screenshot - Samsung Galaxy A57 5G</title>
+    <meta name="description" content="System-wide 3-finger swipe screenshot application for Samsung Galaxy A57 5G & Android devices.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-mode">
+    <div class="app-container">
+        <!-- Header Nav -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>3-Finger Swipe Screenshot</h1>
+                    <span class="badge samsung-badge"><i class="fa-solid fa-mobile-screen-button"></i> Optimized for Samsung Galaxy A57 5G</span>
+                </div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="simulator"><i class="fa-solid fa-desktop"></i> Live Simulator</button>
+                <button class="nav-tab" data-tab="architecture"><i class="fa-solid fa-code"></i> Android Architecture</button>
+                <button class="nav-tab" data-tab="setup"><i class="fa-solid fa-sliders"></i> One UI Setup Guide</button>
+                <button class="nav-tab" data-tab="download"><i class="fa-solid fa-download"></i> Code & Files</button>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- TAB 1: LIVE SIMULATOR -->
+            <section id="tab-simulator" class="tab-pane active">
+                <div class="simulator-layout">
+                    <!-- Left Control Panel -->
+                    <div class="control-panel glass-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-sliders text-violet"></i>
+                            <h2>Service & Gesture Controls</h2>
+                        </div>
+
+                        <!-- Status Switch -->
+                        <div class="status-toggle-box">
+                            <div class="status-info">
+                                <span class="status-label">Accessibility Service Status</span>
+                                <span class="status-indicator active" id="service-status-text">
+                                    <span class="dot"></span> Active & Running
+                                </span>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="service-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <!-- Settings Form -->
+                        <div class="settings-group">
+                            <label class="setting-item">
+                                <div class="setting-meta">
+                                    <span class="setting-title"><i class="fa-solid fa-arrows-up-down"></i> Gesture Direction</span>
+                                    <span class="setting-desc">Direction to swipe 3 fingers</span>
+                                </div>
+                                <select id="gesture-direction" class="custom-select">
+                                    <option value="down" selected>Swipe Down (Recommended)</option>
+                                    <option value="up">Swipe Up</option>
+                                    <option value="horizontal">Swipe Horizontal</option>
+                                </select>
+                            </label>
+
+                            <label class="setting-item">
+                                <div class="setting-meta">
+                                    <span class="setting-title"><i class="fa-solid fa-gauge-high"></i> Swipe Distance Sensitivity</span>
+                                    <span class="setting-desc" id="sensitivity-val">120 px threshold</span>
+                                </div>
+                                <input type="range" id="sensitivity-slider" min="60" max="300" value="120" class="custom-range">
+                            </label>
+
+                            <label class="setting-item">
+                                <div class="setting-meta">
+                                    <span class="setting-title"><i class="fa-solid fa-stopwatch"></i> Capture Cooldown</span>
+                                    <span class="setting-desc" id="cooldown-val">1.0 sec anti-repeat</span>
+                                </div>
+                                <input type="range" id="cooldown-slider" min="0.5" max="3.0" step="0.1" value="1.0" class="custom-range">
+                            </label>
+
+                            <div class="toggle-row">
+                                <div class="toggle-info">
+                                    <span class="toggle-title"><i class="fa-solid fa-vibration"></i> Haptic Feedback</span>
+                                    <span class="toggle-desc">Vibrate on screenshot</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="vibration-toggle" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+
+                            <div class="toggle-row">
+                                <div class="toggle-info">
+                                    <span class="toggle-title"><i class="fa-solid fa-volume-high"></i> Shutter Sound</span>
+                                    <span class="toggle-desc">Play camera sound</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="sound-toggle" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="panel-actions">
+                            <button id="btn-trigger-manual" class="btn btn-primary">
+                                <i class="fa-solid fa-camera"></i> Test Screenshot Now
+                            </button>
+                            <button id="btn-clear-gallery" class="btn btn-secondary">
+                                <i class="fa-solid fa-trash"></i> Clear Captures (<span id="capture-count">0</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Center: Interactive Galaxy A57 5G Phone Frame -->
+                    <div class="phone-wrapper">
+                        <div class="phone-device galaxy-a57" id="phone-device">
+                            <!-- Galaxy Specs Header Bar -->
+                            <div class="device-notch-bar">
+                                <div class="speaker-grille"></div>
+                                <div class="camera-lens"></div>
+                            </div>
+
+                            <!-- Galaxy Screen Content (Interactive Gesture Canvas) -->
+                            <div class="phone-screen" id="phone-screen">
+                                <!-- Status Bar -->
+                                <div class="status-bar">
+                                    <span class="time" id="screen-time">12:45</span>
+                                    <div class="status-icons">
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <i class="fa-solid fa-signal"></i>
+                                        <span class="battery-pct">95%</span>
+                                        <i class="fa-solid fa-battery-full"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Screen Background Content (Simulated App/Home) -->
+                                <div class="simulated-app-ui">
+                                    <div class="oneui-header">
+                                        <span class="oneui-title">Samsung One UI 6.1</span>
+                                        <p class="oneui-sub">Swipe 3 fingers down anywhere on screen</p>
+                                    </div>
+
+                                    <div class="widget-card gradient-violet">
+                                        <div class="widget-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                                        <div class="widget-text">
+                                            <h3>3-Finger Gesture Active</h3>
+                                            <p>Hold left mouse click + drag down to simulate 3-finger swipe on PC!</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="app-grid">
+                                        <div class="app-icon" data-name="Gallery"><i class="fa-solid fa-image"></i><span>Gallery</span></div>
+                                        <div class="app-icon" data-name="Camera"><i class="fa-solid fa-camera"></i><span>Camera</span></div>
+                                        <div class="app-icon" data-name="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></div>
+                                        <div class="app-icon" data-name="Notes"><i class="fa-solid fa-note-sticky"></i><span>Notes</span></div>
+                                    </div>
+
+                                    <!-- Touch Gesture Interaction Layer -->
+                                    <div class="gesture-touch-overlay" id="gesture-touch-overlay">
+                                        <div class="gesture-instruction">
+                                            <div class="fingers-icon">
+                                                <span class="finger f1"></span>
+                                                <span class="finger f2"></span>
+                                                <span class="finger f3"></span>
+                                            </div>
+                                            <p class="instruction-text">Drag 3 fingers down to take screenshot</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Screenshot Flash Effect -->
+                                <div class="screenshot-flash-overlay" id="screenshot-flash"></div>
+
+                                <!-- Screenshot Thumbnail Toast Animation (One UI style) -->
+                                <div class="screenshot-toast-popup" id="screenshot-toast">
+                                    <div class="toast-thumb-box">
+                                        <img id="toast-img" src="" alt="Screenshot preview">
+                                    </div>
+                                    <div class="toast-meta">
+                                        <span class="toast-title">Screenshot Captured</span>
+                                        <span class="toast-desc">Saved to /Pictures/Screenshots</span>
+                                    </div>
+                                    <div class="toast-actions">
+                                        <button class="toast-btn"><i class="fa-solid fa-crop-simple"></i></button>
+                                        <button class="toast-btn"><i class="fa-solid fa-share-nodes"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Navigation Bar (One UI Gestures/Buttons) -->
+                                <div class="navigation-bar">
+                                    <div class="nav-indicator"></div>
+                                </div>
+                            </div>
+
+                            <div class="phone-chin">
+                                <span class="samsung-logo">SAMSUNG</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Gallery & Activity Log -->
+                    <div class="side-panel glass-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-clock-rotate-left text-cyan"></i>
+                            <h2>Captured Screenshots</h2>
+                        </div>
+                        
+                        <div class="gallery-container" id="gallery-container">
+                            <div class="empty-gallery" id="empty-gallery">
+                                <i class="fa-regular fa-images"></i>
+                                <p>No screenshots taken yet.</p>
+                                <span>Swipe 3 fingers down on the phone simulator to capture.</span>
+                            </div>
+                            <div class="gallery-grid" id="gallery-grid"></div>
+                        </div>
+
+                        <div class="card-header margin-top-20">
+                            <i class="fa-solid fa-terminal text-emerald"></i>
+                            <h2>Log Monitor</h2>
+                        </div>
+                        <div class="log-console" id="log-console">
+                            <div class="log-entry info">[System] 3-Finger Swipe Accessibility Service Initialized</div>
+                            <div class="log-entry success">[Service] Listening for Multi-Touch Events (3 Pointers)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: ANDROID ARCHITECTURE & KOTLIN SOURCE -->
+            <section id="tab-architecture" class="tab-pane">
+                <div class="architecture-layout">
+                    <div class="arch-header glass-card">
+                        <h2><i class="fa-brands fa-android text-emerald"></i> Android Native Architecture Overview</h2>
+                        <p>How the system-wide 3-finger swipe screenshot functions on Samsung Galaxy A57 5G using Android Accessibility Service APIs.</p>
+                    </div>
+
+                    <div class="arch-grid">
+                        <div class="arch-card glass-card">
+                            <div class="arch-number">01</div>
+                            <h3>AccessibilityService</h3>
+                            <p>Registers system-wide touch event interception via <code>FLAG_SEND_MOTION_EVENTS</code> and <code>FLAG_REQUEST_MULTI_FINGER_GESTURES</code>.</p>
+                        </div>
+                        <div class="arch-card glass-card">
+                            <div class="arch-number">02</div>
+                            <h3>Pointer Motion Tracking</h3>
+                            <p>Calculates touch vector deltas when <code>event.pointerCount == 3</code>. Tracks start positions, velocities, and directional vectors.</p>
+                        </div>
+                        <div class="arch-card glass-card">
+                            <div class="arch-number">03</div>
+                            <h3>Global Screenshot Action</h3>
+                            <p>Executes <code>performGlobalAction(GLOBAL_ACTION_TAKE_SCREENSHOT)</code> for silent native screenshot capture without system dialogs.</p>
+                        </div>
+                        <div class="arch-card glass-card">
+                            <div class="arch-number">04</div>
+                            <h3>Samsung Knox & One UI</h3>
+                            <p>Fully compatible with Samsung Galaxy A57 5G (Android 14/15 One UI 6.1/7) without requiring root or custom ROMs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Code Viewer -->
+                    <div class="code-viewer-card glass-card">
+                        <div class="code-header">
+                            <div class="code-tabs" id="code-tabs">
+                                <button class="code-tab active" data-file="service">ThreeFingerSwipeAccessibilityService.kt</button>
+                                <button class="code-tab" data-file="detector">GestureDetectorHelper.kt</button>
+                                <button class="code-tab" data-file="manifest">AndroidManifest.xml</button>
+                                <button class="code-tab" data-file="config">accessibility_service_config.xml</button>
+                                <button class="code-tab" data-file="ui">MainActivity.kt</button>
+                            </div>
+                        </div>
+                        <div class="code-body">
+                            <pre><code id="code-content" class="language-kotlin"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: ONE UI SETUP GUIDE -->
+            <section id="tab-setup" class="tab-pane">
+                <div class="setup-layout glass-card">
+                    <div class="setup-header">
+                        <i class="fa-solid fa-mobile-screen text-violet"></i>
+                        <h2>Samsung One UI Setup Guide (Galaxy A57 5G)</h2>
+                        <p>Follow these quick steps to activate system-wide 3-finger swipe screenshot capture on your phone.</p>
+                    </div>
+
+                    <div class="setup-steps-timeline">
+                        <div class="step-item">
+                            <div class="step-badge">1</div>
+                            <div class="step-content">
+                                <h3>Install & Launch App</h3>
+                                <p>Open the installed <strong>3-Finger Swipe Screenshot</strong> app on your Samsung Galaxy A57 5G.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-badge">2</div>
+                            <div class="step-content">
+                                <h3>Enable Accessibility Service</h3>
+                                <p>Tap <strong>"Enable Accessibility Service"</strong>. You will be redirected to:</p>
+                                <div class="breadcrumb-trail">
+                                    <span>Settings</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <span>Accessibility</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <span>Installed apps</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <strong>3-Finger Swipe Screenshot</strong>
+                                </div>
+                                <p>Toggle the service to <strong>ON</strong> and grant touch interception permissions.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-badge">3</div>
+                            <div class="step-content">
+                                <h3>Exempt from Battery Optimization (Samsung One UI)</h3>
+                                <p>To prevent One UI from killing the background service during deep sleep:</p>
+                                <div class="breadcrumb-trail">
+                                    <span>Settings</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <span>Apps</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <span>3-Finger Swipe</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <span>Battery</span> <i class="fa-solid fa-chevron-right"></i>
+                                    <strong>Unrestricted</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <div class="step-badge">4</div>
+                            <div class="step-content">
+                                <h3>Test 3-Finger Swipe Anywhere</h3>
+                                <p>Swipe 3 fingers down anywhere on screen (in any app, home screen, or game) to trigger an immediate screenshot!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: CODE & FILES DOWNLOAD -->
+            <section id="tab-download" class="tab-pane">
+                <div class="download-layout glass-card">
+                    <div class="download-header">
+                        <i class="fa-solid fa-file-zipper text-cyan"></i>
+                        <h2>Download Ready APK & Source Code</h2>
+                        <p>The Android APK has been compiled and is ready to install on your Samsung Galaxy A57 5G!</p>
+                        <div style="margin-top: 16px;">
+                            <a href="app-debug.apk" download="3-finger-swipe-screenshot.apk" class="btn btn-primary" style="display: inline-flex; text-decoration: none; width: auto; padding: 14px 28px; font-size: 1rem;">
+                                <i class="fa-solid fa-download"></i> Download app-debug.apk (20.4 MB)
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="file-tree-container">
+                        <h3><i class="fa-solid fa-folder-open text-amber"></i> Project Directory Structure</h3>
+                        <ul class="file-tree">
+                            <li><i class="fa-solid fa-folder text-amber"></i> android/
+                                <ul>
+                                    <li><i class="fa-solid fa-file-code text-violet"></i> build.gradle.kts (Project configuration)</li>
+                                    <li><i class="fa-solid fa-file-code text-violet"></i> settings.gradle.kts</li>
+                                    <li><i class="fa-solid fa-folder text-amber"></i> app/
+                                        <ul>
+                                            <li><i class="fa-solid fa-file-code text-violet"></i> build.gradle.kts (App dependencies)</li>
+                                            <li><i class="fa-solid fa-folder text-amber"></i> src/main/
+                                                <ul>
+                                                    <li><i class="fa-solid fa-file-medical text-red"></i> AndroidManifest.xml</li>
+                                                    <li><i class="fa-solid fa-folder text-amber"></i> java/com/galaxy/threefingerswipe/
+                                                        <ul>
+                                                            <li><i class="fa-solid fa-file-code text-emerald"></i> MainActivity.kt (Jetpack Compose UI)</li>
+                                                            <li><i class="fa-solid fa-file-code text-emerald"></i> ThreeFingerSwipeAccessibilityService.kt</li>
+                                                            <li><i class="fa-solid fa-file-code text-emerald"></i> GestureDetectorHelper.kt</li>
+                                                            <li><i class="fa-solid fa-file-code text-emerald"></i> ScreenshotManager.kt</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><i class="fa-solid fa-folder text-amber"></i> res/
+                                                        <ul>
+                                                            <li><i class="fa-solid fa-file-code text-blue"></i> xml/accessibility_service_config.xml</li>
+                                                            <li><i class="fa-solid fa-file-code text-blue"></i> values/strings.xml</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="build-instructions-box">
+                        <h3><i class="fa-solid fa-hammer text-emerald"></i> How to Build APK with Android Studio</h3>
+                        <ol class="build-steps">
+                            <li>Open <strong>Android Studio</strong> (Hedgehog, Iguana, or Jellyfish).</li>
+                            <li>Select <strong>Open an existing project</strong> and select the <code>android</code> folder in this project directory.</li>
+                            <li>Sync Gradle project files.</li>
+                            <li>Connect your <strong>Samsung Galaxy A57 5G</strong> via USB with USB Debugging enabled (or choose an emulator).</li>
+                            <li>Click <strong>Run (Shift + F10)</strong> or build APK via <code>Build -> Build APKs</code>.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Screenshot Modal Preview -->
+    <div class="modal-backdrop" id="image-modal">
+        <div class="modal-content glass-card">
+            <button class="modal-close" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="Screenshot Detail">
+                <div class="modal-info">
+                    <h4 id="modal-title">Screenshot_2026-08-22.png</h4>
+                    <span id="modal-meta">1080 x 2340 • Samsung Galaxy A57 5G</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/android-exporter.js"></script>
+    <script src="js/gesture-simulator.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
