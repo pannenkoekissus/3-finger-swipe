@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.accessibilityservice.GestureDescription
 import android.graphics.Path
 import android.os.Build
+import android.os.SystemClock
 import android.os.Handler
 import android.os.Looper
 import android.os.VibrationEffect
@@ -40,6 +41,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
     private val strokePoints = ArrayList<FloatArray>()
     private val pendingReplays = ArrayDeque<GestureDescription>()
     private var replayInProgress = false
+    private var lastReplayDispatchAt = 0L
     private var downX = 0f
     private var downY = 0f
 
@@ -94,6 +96,9 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 flags = AccessibilityServiceInfo.DEFAULT or
                         AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    flags = flags or AccessibilityServiceInfo.FLAG_REQUEST_2_FINGER_PASSTHROUGH
+                }
             } else {
                 flags = AccessibilityServiceInfo.DEFAULT or
                         AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES or
@@ -180,6 +185,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
             strokePoints.clear()
             return
         }
+        durationMs = durationMs.coerceAtMost(MAX_REPLAY_WINDOW_MS.toFloat())
 
         val first = strokePoints.first()
         val path = Path()
@@ -205,9 +211,17 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
     }
 
     private fun dispatchNextReplay() {
+        if (replayInProgress &&
+            SystemClock.uptimeMillis() - lastReplayDispatchAt > REPLAY_WATCHDOG_MS
+        ) {
+            Log.w(TAG, "Replay callback lost, resetting")
+            replayInProgress = false
+            pendingReplays.clear()
+        }
         if (replayInProgress) return
         val next = pendingReplays.removeFirstOrNull() ?: return
         replayInProgress = true
+        lastReplayDispatchAt = SystemClock.uptimeMillis()
         val dispatched = dispatchGesture(next, object : GestureResultCallback() {
             override fun onCompleted(gestureDescription: GestureDescription?) {
                 replayInProgress = false
@@ -331,5 +345,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         private const val FALLBACK_SLOP_PX = 32f
         private const val MIN_REPLAY_DURATION_MS = 40f
         private const val MAX_REPLAY_DURATION_MS = 15000f
+        private const val MAX_REPLAY_WINDOW_MS = 60L
+        private const val REPLAY_WATCHDOG_MS = 1500L
     }
 }
