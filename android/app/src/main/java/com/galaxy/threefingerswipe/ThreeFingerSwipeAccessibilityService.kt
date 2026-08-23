@@ -83,7 +83,8 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
     private fun configureServiceInfo() {
         val info = AccessibilityServiceInfo().apply {
-            eventTypes = 0
+            eventTypes = AccessibilityEvent.TYPE_TOUCH_INTERACTION_START or
+                    AccessibilityEvent.TYPE_TOUCH_INTERACTION_END
             feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
             notificationTimeout = 0
 
