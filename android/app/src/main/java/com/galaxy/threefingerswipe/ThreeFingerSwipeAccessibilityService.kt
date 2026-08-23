@@ -7,13 +7,15 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.InputDevice
 import android.view.MotionEvent
 import android.view.accessibility.AccessibilityEvent
+import android.widget.Toast
 import android.util.Log
 
 /**
  * System-Wide 3-Finger Swipe Screenshot Accessibility Service
- * Optimized for Samsung Galaxy A57 5G & Android 14/15 One UI.
+ * Optimized for Samsung Galaxy A57 5G & Android 14/15 One UI 6/7.
  */
 class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
@@ -37,17 +39,32 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
                     AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES or
                     AccessibilityServiceInfo.FLAG_SEND_MOTION_EVENTS
             notificationTimeout = 100
+
+            // Motion event routing for touchscreen input source (Android 12 / API 31+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                try {
+                    setMotionEventSources(InputDevice.SOURCE_TOUCHSCREEN)
+                    Log.i(TAG, "AccessibilityServiceInfo setMotionEventSources TOUCHSCREEN enabled")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to set motion event sources", e)
+                }
+            }
         }
         setServiceInfo(info)
 
-        val threshold = prefs?.getInt("threshold_px", 200) ?: 200
+        val threshold = prefs?.getInt("threshold_px", 120) ?: 120
         val dir = prefs?.getString("direction", "DOWN") ?: "DOWN"
 
         gestureDetector = GestureDetectorHelper(
             minSwipeDistancePx = threshold,
             direction = dir,
-            onSwipeDetected = { triggerScreenshot() }
+            onSwipeDetected = { triggerScreenshot() },
+            onFingersDetected = {
+                Log.d(TAG, "3 Fingers Detected on touchscreen")
+            }
         )
+
+        showToast("3-Finger Swipe Screenshot Service Active!")
     }
 
     override fun onMotionEvent(event: MotionEvent) {
@@ -71,7 +88,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
     private fun triggerScreenshot() {
         val now = System.currentTimeMillis()
-        val cooldownSec = prefs?.getFloat("cooldown_sec", 1.0f) ?: 1.0f
+        val cooldownSec = prefs?.getFloat("cooldown_sec", 0.8f) ?: 0.8f
         val cooldownMs = (cooldownSec * 1000).toLong()
 
         if (now - lastScreenshotTime < cooldownMs) {
@@ -79,6 +96,8 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
             return
         }
         lastScreenshotTime = now
+
+        Log.i(TAG, "Triggering Screenshot Global Action")
 
         // Trigger vibration feedback
         if (prefs?.getBoolean("vibration_enabled", true) != false) {
@@ -94,8 +113,19 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val success = performGlobalAction(GLOBAL_ACTION_TAKE_SCREENSHOT)
             Log.i(TAG, "GLOBAL_ACTION_TAKE_SCREENSHOT result: $success")
+            if (success) {
+                showToast("Screenshot Taken! 📸")
+            }
         } else {
             Log.e(TAG, "Screenshot action requires Android 9.0+")
+        }
+    }
+
+    private fun showToast(msg: String) {
+        try {
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e(TAG, "Toast error", e)
         }
     }
 
