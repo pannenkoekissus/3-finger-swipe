@@ -5,6 +5,8 @@ import android.accessibilityservice.AccessibilityServiceInfo
 import android.accessibilityservice.TouchInteractionController
 import android.content.Context
 import android.content.SharedPreferences
+import android.accessibilityservice.GestureDescription
+import android.graphics.Path
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -34,6 +36,10 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
     private var pendingDelegateRunnable: Runnable? = null
     private var isDelegating = false
     private var isIntercepting = false
+    private var delegatedLive = false
+    private val strokePoints = ArrayList<FloatArray>()
+    private val pendingReplays = ArrayDeque<GestureDescription>()
+    private var replayInProgress = false
     private var downX = 0f
     private var downY = 0f
 
@@ -118,20 +124,29 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 isIntercepting = false
+                delegatedLive = false
                 downX = event.x
                 downY = event.y
+                strokePoints.clear()
+                recordPoint(event)
                 scheduleFallbackDelegate()
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (!isIntercepting && !delegatedLive && event.pointerCount == 1) {
+                    recordPoint(event)
+                }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 cancelPendingDelegate()
                 val wasIntercepting = isIntercepting
+                val wasDelegated = delegatedLive
                 isIntercepting = false
-                gestureDetector.processMotionEvent(event)
-                if (event.actionMasked == MotionEvent.ACTION_UP &&
-                    !wasIntercepting && !isDelegating
-                ) {
-                    delegateToApps()
+                delegatedLive = false
+                if (!wasIntercepting && !wasDelegated && event.actionMasked == MotionEvent.ACTION_UP) {
+                    recordPoint(event)
+                    tryReplayGesture()
                 }
+                gestureDetector.processMotionEvent(event)
                 return
             }
         }
@@ -149,6 +164,65 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
             if (dx * dx + dy * dy > FALLBACK_SLOP_PX * FALLBACK_SLOP_PX) {
                 delegateToApps()
             }
+        }
+    }
+
+    private fun recordPoint(event: MotionEvent) {
+        strokePoints.add(floatArrayOf(event.eventTime.toFloat(), event.x, event.y))
+    }
+
+    private fun tryReplayGesture() {
+        if (strokePoints.isEmpty()) return
+        val startTime = strokePoints.first()[0]
+        var durationMs = strokePoints.last()[0] - startTime
+        if (durationMs < MIN_REPLAY_DURATION_MS) durationMs = MIN_REPLAY_DURATION_MS
+        if (durationMs > MAX_REPLAY_DURATION_MS) {
+            strokePoints.clear()
+            return
+        }
+
+        val first = strokePoints.first()
+        val path = Path()
+        path.moveTo(first[1], first[2])
+        for (i in 1 until strokePoints.size) {
+            path.lineTo(strokePoints[i][1], strokePoints[i][2])
+        }
+        if (strokePoints.size == 1) {
+            path.lineTo(first[1] + 0.01f, first[2])
+        }
+
+        val stroke = GestureDescription.StrokeDescription(path, 0, durationMs.toLong())
+        val gesture = GestureDescription.Builder()
+            .addStroke(stroke)
+            .build()
+        strokePoints.clear()
+        enqueueReplay(gesture)
+    }
+
+    private fun enqueueReplay(gesture: GestureDescription) {
+        pendingReplays.addLast(gesture)
+        dispatchNextReplay()
+    }
+
+    private fun dispatchNextReplay() {
+        if (replayInProgress) return
+        val next = pendingReplays.removeFirstOrNull() ?: return
+        replayInProgress = true
+        val dispatched = dispatchGesture(next, object : GestureResultCallback() {
+            override fun onCompleted(gestureDescription: GestureDescription?) {
+                replayInProgress = false
+                dispatchNextReplay()
+            }
+
+            override fun onCancelled(gestureDescription: GestureDescription?) {
+                replayInProgress = false
+                Log.d(TAG, "Tap replay cancelled")
+                dispatchNextReplay()
+            }
+        }, null)
+        if (!dispatched) {
+            replayInProgress = false
+            pendingReplays.clear()
         }
     }
 
@@ -174,7 +248,9 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         isDelegating = true
         try {
             controller.requestDelegating()
-            Log.d(TAG, "Non-3-finger touch delegated to apps")
+            delegatedLive = true
+            strokePoints.clear()
+            Log.d(TAG, "Touch delegated to apps")
         } catch (e: Exception) {
             Log.e(TAG, "requestDelegating failed", e)
             isDelegating = false
@@ -253,5 +329,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         private const val TAG = "3FingerSwipeService"
         private const val DELEGATE_DELAY_MS = 300L
         private const val FALLBACK_SLOP_PX = 32f
+        private const val MIN_REPLAY_DURATION_MS = 40f
+        private const val MAX_REPLAY_DURATION_MS = 15000f
     }
 }
