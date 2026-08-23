@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityServiceInfo
 import android.accessibilityservice.TouchInteractionController
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -56,6 +57,11 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            try {
+                setAccessibilityFocusAppearance(1, Color.TRANSPARENT)
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to hide accessibility focus highlight", e)
+            }
             mainHandler = Handler(Looper.getMainLooper())
             touchController = getTouchInteractionController(Display.DEFAULT_DISPLAY)
             touchController?.registerCallback(null, object : TouchInteractionController.Callback {
