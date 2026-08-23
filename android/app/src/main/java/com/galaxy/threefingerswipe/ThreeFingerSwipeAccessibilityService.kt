@@ -2,16 +2,20 @@ package com.galaxy.threefingerswipe
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.accessibilityservice.TouchInteractionController
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
+import android.view.Display
 import android.view.InputDevice
 import android.view.MotionEvent
 import android.view.accessibility.AccessibilityEvent
 import android.widget.Toast
-import android.util.Log
 
 /**
  * System-Wide 3-Finger Swipe Screenshot Accessibility Service
@@ -25,6 +29,14 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
     private var lastScreenshotTime: Long = 0
 
+    private var mainHandler: Handler? = null
+    private var touchController: TouchInteractionController? = null
+    private var pendingDelegateRunnable: Runnable? = null
+    private var isDelegating = false
+    private var isIntercepting = false
+    private var downX = 0f
+    private var downY = 0f
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.i(TAG, "3-Finger Swipe Accessibility Service Connected!")
@@ -32,25 +44,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         prefs = getSharedPreferences("swipe_settings", Context.MODE_PRIVATE)
 
-        val info = AccessibilityServiceInfo().apply {
-            eventTypes = AccessibilityEvent.TYPES_ALL_MASK
-            feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
-            flags = AccessibilityServiceInfo.DEFAULT or
-                    AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES or
-                    AccessibilityServiceInfo.FLAG_SEND_MOTION_EVENTS
-            notificationTimeout = 100
-
-            // Motion event routing for touchscreen input source (Android 12 / API 31+)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                try {
-                    setMotionEventSources(InputDevice.SOURCE_TOUCHSCREEN)
-                    Log.i(TAG, "AccessibilityServiceInfo setMotionEventSources TOUCHSCREEN enabled")
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to set motion event sources", e)
-                }
-            }
-        }
-        setServiceInfo(info)
+        configureServiceInfo()
 
         val threshold = prefs?.getInt("threshold_px", 120) ?: 120
         val dir = prefs?.getString("direction", "DOWN") ?: "DOWN"
@@ -64,18 +58,130 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
             }
         )
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mainHandler = Handler(Looper.getMainLooper())
+            touchController = getTouchInteractionController(Display.DEFAULT_DISPLAY)
+            touchController?.registerCallback(null, object : TouchInteractionController.Callback {
+                override fun onMotionEvent(event: MotionEvent) {
+                    handleTouchInteraction(event)
+                }
+
+                override fun onStateChanged(state: Int) {
+                    if (state == TouchInteractionController.STATE_CLEAR) {
+                        isDelegating = false
+                        isIntercepting = false
+                    }
+                }
+            })
+            Log.i(TAG, "TouchInteractionController passthrough gesture detection active")
+        }
+
         showToast("3-Finger Swipe Screenshot Service Active!")
     }
 
-    override fun onMotionEvent(event: MotionEvent) {
+    private fun configureServiceInfo() {
+        val info = AccessibilityServiceInfo().apply {
+            eventTypes = AccessibilityEvent.TYPES_ALL_MASK
+            feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+            notificationTimeout = 100
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                flags = AccessibilityServiceInfo.DEFAULT or
+                        AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE
+            } else {
+                flags = AccessibilityServiceInfo.DEFAULT or
+                        AccessibilityServiceInfo.FLAG_REQUEST_MULTI_FINGER_GESTURES or
+                        AccessibilityServiceInfo.FLAG_SEND_MOTION_EVENTS
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    try {
+                        setMotionEventSources(InputDevice.SOURCE_TOUCHSCREEN)
+                        Log.i(TAG, "AccessibilityServiceInfo setMotionEventSources TOUCHSCREEN enabled")
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Failed to set motion event sources", e)
+                    }
+                }
+            }
+        }
+        setServiceInfo(info)
+    }
+
+    private fun handleTouchInteraction(event: MotionEvent) {
         val isServiceActive = prefs?.getBoolean("service_active", true) ?: true
         if (!isServiceActive) {
-            super.onMotionEvent(event)
+            delegateToApps()
             return
         }
 
-        gestureDetector.processMotionEvent(event)
-        super.onMotionEvent(event)
+        if (isDelegating) return
+
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                isIntercepting = false
+                downX = event.x
+                downY = event.y
+                scheduleFallbackDelegate()
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                cancelPendingDelegate()
+                isIntercepting = false
+                gestureDetector.processMotionEvent(event)
+                return
+            }
+        }
+
+        if (event.pointerCount >= 3) {
+            isIntercepting = true
+            cancelPendingDelegate()
+            gestureDetector.processMotionEvent(event)
+            return
+        }
+
+        if (!isIntercepting) {
+            val dx = event.x - downX
+            val dy = event.y - downY
+            if (dx * dx + dy * dy > FALLBACK_SLOP_PX * FALLBACK_SLOP_PX) {
+                delegateToApps()
+            }
+        }
+    }
+
+    private fun scheduleFallbackDelegate() {
+        cancelPendingDelegate()
+        val runnable = Runnable { delegateToApps() }
+        pendingDelegateRunnable = runnable
+        mainHandler?.postDelayed(runnable, DELEGATE_DELAY_MS)
+    }
+
+    private fun cancelPendingDelegate() {
+        pendingDelegateRunnable?.let { mainHandler?.removeCallbacks(it) }
+        pendingDelegateRunnable = null
+    }
+
+    private fun delegateToApps() {
+        cancelPendingDelegate()
+        if (isDelegating) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        val controller = touchController ?: return
+        if (controller.state != TouchInteractionController.STATE_TOUCH_INTERACTING) return
+
+        isDelegating = true
+        try {
+            controller.requestDelegating()
+            Log.d(TAG, "Non-3-finger touch delegated to apps")
+        } catch (e: Exception) {
+            Log.e(TAG, "requestDelegating failed", e)
+            isDelegating = false
+        }
+    }
+
+    override fun onMotionEvent(event: MotionEvent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return
+
+        val isServiceActive = prefs?.getBoolean("service_active", true) ?: true
+        if (isServiceActive) {
+            gestureDetector.processMotionEvent(event)
+        }
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -84,6 +190,14 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
     override fun onInterrupt() {
         Log.w(TAG, "Accessibility Service interrupted")
+    }
+
+    override fun onDestroy() {
+        cancelPendingDelegate()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            touchController?.unregisterAllCallbacks()
+        }
+        super.onDestroy()
     }
 
     private fun triggerScreenshot() {
@@ -131,5 +245,7 @@ class ThreeFingerSwipeAccessibilityService : AccessibilityService() {
 
     companion object {
         private const val TAG = "3FingerSwipeService"
+        private const val DELEGATE_DELAY_MS = 350L
+        private const val FALLBACK_SLOP_PX = 32f
     }
 }
